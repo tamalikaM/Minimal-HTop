@@ -25,24 +25,15 @@ float Processor::Utilization() {
     // Guest time is already accounted in usertime
     user = user - guest; // guest subtracted from user time
     nice = nice - guestnice;  // guest_nice subtracted from nice time
-    // Fields existing on kernels >= 2.6
-    // (and RHEL's patched kernel 2.4...)
-    float idle_alltime = idle + iowait; // ioWait is added in the idleTime
-    float system_alltime = system + irq + softirq;
-    float virt_alltime = guest + guestnice;
-    float totaltime = user + nice + system_alltime + idle_alltime + steal + virt_alltime; 
-    //cout << totaltime << "\n";
-    prev_idle_ = prev_idle_ + prev_iowait_;
-    prev_non_idle_ = prev_idle_ + prev_nice_ + prev_system_ + prev_irq_ + prev_softirq_ + prev_steal_;
+    idle = idle + iowait;
     float nonIdle = user + nice + system + irq + softirq + steal;
-    prev_total_ = prev_idle_ + prev_non_idle_;
     float total = idle + nonIdle;
-
-    // differentiate: actual value minus the previous one
-    float totaldel = total - prev_total_;
-    float idle__del = idle - prev_idle_;
-
-    float CPU_Percentage = (totaldel - idle__del)/totaldel;
     
-    return CPU_Percentage;
-    }
+    float totald = total - prev_total_;
+    float idled = idle - prev_idle_;
+    
+    prev_total_ = total;
+    prev_idle_ = idle;
+
+    return (totald - idled)/totald;
+}

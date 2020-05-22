@@ -7,18 +7,9 @@ class Processor {
 
   // TODO: Declare any necessary private members
  private:
-    float prev_user_;
-    float prev_nice_;
-    float prev_system_;
-    float prev_idle_;
-    float prev_iowait_;
-    float prev_irq_;
-    float prev_softirq_;
-    float prev_steal_;
-    float prev_guest_;
-    float prev_guestnice_; 
-    float prev_non_idle_;
-    float prev_total_;
+    float prev_user_, prev_nice_, prev_system_,prev_idle_,prev_iowait_,
+    prev_irq_,prev_softirq_,prev_steal_,prev_guest_,prev_guestnice_,prev_non_idle_,prev_total_ ;
 };
+
 
 #endif

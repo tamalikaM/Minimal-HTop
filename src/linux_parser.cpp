@@ -14,6 +14,7 @@ using std::ifstream;
 using std::istringstream;
 using std::getline;
 using std::cout;
+using std::stol;
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::OperatingSystem() {
@@ -115,7 +116,7 @@ long LinuxParser::Jiffies() {
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid) { 
     ifstream filestream(kProcDirectory + to_string(pid) + kStatFilename);
-    float active_jifs = 0.0;
+    long active_jifs = 0;
     string line, value;
      if (filestream.is_open()) {
       if(getline(filestream, line)) {
@@ -123,7 +124,7 @@ long LinuxParser::ActiveJiffies(int pid) {
       for(int i = 1; i < 18; i++) {
         linestream >> value;
         if(i == 14 || i == 15 || i == 16 || i == 17){
-          active_jifs += stof(value);
+          active_jifs += stol(value);
         }
       }
     }
@@ -286,6 +287,8 @@ long LinuxParser::UpTime(int pid) {
       istringstream linestream(line);
       for(int i = 1; i < 23; i++) {
         linestream >> value;
+        
+        //cout <<"value "<< value;
         if(i == 22) {
           up_time = stol(value);
       }

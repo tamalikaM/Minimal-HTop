@@ -6,6 +6,7 @@
 
 #include "process.h"
 #include "linux_parser.h"
+#include "system.h"
 
 using std::string;
 using std::to_string;
@@ -22,7 +23,7 @@ float Process::CpuUtilization() {
    	float total_time = LinuxParser::ActiveJiffies(Process::Pid());
     // if(Process::Pid() %10 ==0)
     //cout << " value " << total_time <<"\n";
-    float seconds =  Process::UpTime();
+    float seconds =  LinuxParser::UpTime()- Process::UpTime() ;
     float cpu_usage = ((total_time /sysconf(_SC_CLK_TCK))/ seconds);
     return cpu_usage;  
 }
