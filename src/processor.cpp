@@ -8,7 +8,7 @@ using std::string;
 using std::stof;
 using std::cout;
 
-// TODO: Return the aggregate CPU utilization
+// Return the aggregate CPU utilization
 float Processor::Utilization() { 
   	vector<string> cpuUtilValues = LinuxParser::CpuUtilization();
     float user =  stof(cpuUtilValues[LinuxParser::CPUStates::kUser_]);
